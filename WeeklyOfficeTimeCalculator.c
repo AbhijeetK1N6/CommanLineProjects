@@ -3,7 +3,7 @@ Considering a 9.5 Hours daily working and mandatory 47.5 hours working in a 5 da
 this program will show the total working hours and total required hours in a week to meet the office policy.
 */
 //BASE CODE : 7-46
-//MODIFIED CODE : 51 - 123
+//MODIFIED CODE : 51 - 132
 
 #include<stdio.h>
 int time_calculator(int arr1[], int arr2[]){
@@ -70,10 +70,11 @@ int *total_time_calculator(int arrHours[], int arrMinutes[]){
 
 int *extra_or_required_working_hours(int arrHourMinutes[]){
     //arrHourMinutes = {Hours,Minutes}
+    int required_time = 2850;        //47.5 hrs to minutes
     static int resultBox2[10];
     int temp;
     int condition_time = (arrHourMinutes[0] * 60) + 30;
-    int required_time = 2850;        //47.5 hrs to minutes
+    
     if(condition_time > required_time ){
         if(arrHourMinutes[1] < 30){
             temp = 30 + arrHourMinutes[1];
@@ -96,16 +97,16 @@ int *extra_or_required_working_hours(int arrHourMinutes[]){
         }
     }
     
-    
     resultBox2[0] = arrHourMinutes[0];
     resultBox2[1] = temp;
     return resultBox2;
 }
-
+//Code by @AbhijeetK1N6
 int main(){
     int arrHours[4];
     int arrMinutes[4];
     int *Final_Result_Box1, *Final_Result_Box2;
+    int required_time = 2850;        //47.5 hrs to minutes
     char arrDays[5][10]={"Monday","Tuesday","Wednesday","Thursday","Friday"};
     for(int i = 0 ; i < 4 ; i++){
         printf("Enter the Working Hours for %s :- ", arrDays[i]);
@@ -116,8 +117,18 @@ int main(){
     Final_Result_Box1 = total_time_calculator(arrHours,arrMinutes);
     printf("*************************************************************\n");
     printf("Your Total Weekly Working Hours are %d Hours and %d Minutes\n", Final_Result_Box1[0], Final_Result_Box1[1]);
+    
+    int condition_time = (Final_Result_Box1[0] * 60) + 30;
     Final_Result_Box2 = extra_or_required_working_hours(Final_Result_Box1);
     printf("*************************************************************\n");
-    printf("You are required to Work %d Hours and %d Minutes more on Friday\n", Final_Result_Box2[0], Final_Result_Box2[1]);
+    if(condition_time > required_time){
+        printf("You have already done %d Hours and %d Minutes Over Time, you don't need to work on Friday\n", Final_Result_Box2[0], Final_Result_Box2[1]);
+        printf("*************************************************************\n");
+    }
+    else{
+        printf("You are required to Work %d Hours and %d Minutes more on Friday\n", Final_Result_Box2[0], Final_Result_Box2[1]);
     printf("*************************************************************\n");
+    }
 }
+
+//GitHub Link : https://github.com/AbhijeetK1N6
