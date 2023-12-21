@@ -49,11 +49,12 @@ int main(){
 
 
 #include<stdio.h>
+int required_time = 2850; //47.5 hrs to minutes
 
-int *total_time_calculator(int arrHours[], int arrMinutes[]){
+int *total_time_calculator(int arrHours[], int arrMinutes[], int n){
     static int resultBox1[10];
     int hourCounter = 0, minutesCounter = 0, totalHours;
-    for(int i = 0 ; i < 4 ; i++){
+    for(int i = 0 ; i < n ; i++){
         hourCounter += arrHours[i];
         minutesCounter += arrMinutes[i];
     }
@@ -68,9 +69,25 @@ int *total_time_calculator(int arrHours[], int arrMinutes[]){
     
 }
 
+int *time_balancer(int a, int b, int numDay){
+    static int resultBox3[10];
+    int required_minutes = (a*60) + b;
+    if(numDay > 0 ){
+        int minutes_each_day = required_minutes/(5-numDay);
+        int temp = minutes_each_day;
+        resultBox3[0] = minutes_each_day/60;
+        resultBox3[1] = temp%60;
+        return resultBox3;
+    }
+    else{
+        return 0;
+    }
+}
+
+
 int *extra_or_required_working_hours(int arrHourMinutes[]){
     //arrHourMinutes = {Hours,Minutes}
-    int required_time = 2850;        //47.5 hrs to minutes
+            
     static int resultBox2[10];
     int temp;
     int condition_time = (arrHourMinutes[0] * 60) + 30;
@@ -105,7 +122,7 @@ int *extra_or_required_working_hours(int arrHourMinutes[]){
 int main(){
     int arrHours[4];
     int arrMinutes[4];
-    int *Final_Result_Box1, *Final_Result_Box2, emp_id;
+    int *Final_Result_Box1, *Final_Result_Box2, *Final_Result_Box3, emp_id, numDay;
     char emp_name[15];
     int required_time = 2850;        //47.5 hrs to minutes
     char arrDays[5][10]={"Monday","Tuesday","Wednesday","Thursday","Friday"};
@@ -113,26 +130,42 @@ int main(){
     gets(emp_name);
     printf("Enter you Employee ID :- ");
     scanf("%d",&emp_id);
-    for(int i = 0 ; i < 4 ; i++){
+    printf("How Many Days you have Worked till now? : - ");
+    scanf("%d",&numDay);
+    
+    for(int i = 0 ; i < numDay ; i++){
         printf("Enter the Working Hours for %s :- ", arrDays[i]);
         scanf("%d", &arrHours[i]);
         printf("Enter the Total Minutes (Except Hours) for %s :- ", arrDays[i]);
         scanf("%d", &arrMinutes[i]);
     }
-    Final_Result_Box1 = total_time_calculator(arrHours,arrMinutes);
+    Final_Result_Box1 = total_time_calculator(arrHours,arrMinutes,numDay);
     printf("*************************************************************\n");
-    printf("Your Total Weekly Working Hours are %d Hours and %d Minutes\n", Final_Result_Box1[0], Final_Result_Box1[1]);
+    printf("Total Weekly Working Hours are %d Hours and %d Minutes\n", Final_Result_Box1[0], Final_Result_Box1[1]);
     
     int condition_time = (Final_Result_Box1[0] * 60) + 30;
     Final_Result_Box2 = extra_or_required_working_hours(Final_Result_Box1);
     printf("*************************************************************\n");
-    if(condition_time > required_time){
+    //
+    if(numDay==4){
+        if(condition_time > required_time){
         printf("Hey %s, you have already worked %d Hours and %d Minutes Over Time, you don't need to work on Friday\n", emp_name, Final_Result_Box2[0], Final_Result_Box2[1]);
         printf("*************************************************************\n");
+        }
+        else{
+             printf("Hey %s, you are required to Work %d Hours and %d Minutes more on Friday\n", emp_name, Final_Result_Box2[0], Final_Result_Box2[1]);
+            printf("*************************************************************\n");
+        }
     }
     else{
-        printf("Hey %s, you are required to Work %d Hours and %d Minutes more on Friday\n", emp_name, Final_Result_Box2[0], Final_Result_Box2[1]);
-    printf("*************************************************************\n");
+        Final_Result_Box3 = time_balancer(Final_Result_Box2[0], Final_Result_Box2[1],numDay);
+        if(Final_Result_Box3 == 0){
+            printf("Hey %s You have not worked in this Week.. :(",emp_name);
+        }
+        else{
+            
+            printf("Hey %s For a Balanced Work Life, you can do %d Hours and %d Minutes daily for the next %d Days.",emp_name, Final_Result_Box3[0], Final_Result_Box3[1], 5-numDay);
+        }
     }
 }
 
