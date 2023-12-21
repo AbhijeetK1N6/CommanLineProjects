@@ -3,7 +3,7 @@ Considering a 9.5 Hours daily working and mandatory 47.5 hours working in a 5 da
 this program will show the total working hours and total required hours in a week to meet the office policy.
 */
 //BASE CODE : 7-46
-//MODIFIED CODE : 51 - 139
+//MODIFIED CODE : 51 - 239
 
 #include<stdio.h>
 int time_calculator(int arr1[], int arr2[]){
@@ -50,6 +50,66 @@ int main(){
 
 #include<stdio.h>
 int required_time = 2850; //47.5 hrs to minutes
+
+struct Time {
+    int hours;
+    int minutes;
+};
+
+// Function to calculate total minutes worked
+int calculateTotalMinutes(struct Time inTime, struct Time outTime) {
+    int inMinutes = inTime.hours * 60 + inTime.minutes;
+    int outMinutes = outTime.hours * 60 + outTime.minutes;
+    return outMinutes - inMinutes;
+}
+
+// Function to convert minutes to hours and minutes
+void convertToHoursAndMinutes(int totalMinutes) {
+    int hours = totalMinutes / 60;
+    int minutes = totalMinutes % 60;
+    printf("Total hours worked: %d hours and %d minutes.\n", hours, minutes);
+}
+//////////////
+int timestamper(){
+    struct Time inTime, outTime;
+    const int standardShiftMinutes = 9 * 60 + 30; // 9 hours 30 minutes
+        
+    //for(int i = 0 ; i < numDay ; i++){}
+    printf("Enter in-time (hours minutes): ");
+    scanf("%d %d", &inTime.hours, &inTime.minutes);
+    
+    printf("Enter out-time (hours minutes): ");
+    scanf("%d %d", &outTime.hours, &outTime.minutes);
+    
+    int totalMinutes = calculateTotalMinutes(inTime, outTime);
+    convertToHoursAndMinutes(totalMinutes);
+    
+    // Calculate extra time worked
+    int extraMinutes = totalMinutes - standardShiftMinutes;
+    if (extraMinutes > 0) {
+        int extraHours = extraMinutes / 60;
+        int extraRemainingMinutes = extraMinutes % 60;
+        printf("Extra time worked: %d hours and %d minutes.\n", extraHours, extraRemainingMinutes);
+    } else {
+        printf("No extra time worked.\n");
+    }
+}
+/////
+
+
+int choicer(void){
+    int a;
+    printf("Press (1) to Input Hours\nPress (2) to Input TimeStamps\nChoose your Input type from above :-");
+        scanf("%d",&a);
+        printf("*************************************************************\n");
+    if(a==1 || a==2){
+        return a;
+    }
+    else{
+        printf("Wrong Choice!!\nPlease retry\n");
+        choicer();
+    }
+}
 
 int *total_time_calculator(int arrHours[], int arrMinutes[], int n){
     static int resultBox1[10];
@@ -122,50 +182,59 @@ int *extra_or_required_working_hours(int arrHourMinutes[]){
 int main(){
     int arrHours[4];
     int arrMinutes[4];
+    int mode;
     int *Final_Result_Box1, *Final_Result_Box2, *Final_Result_Box3, emp_id, numDay;
     char emp_name[15];
     int required_time = 2850;        //47.5 hrs to minutes
     char arrDays[5][10]={"Monday","Tuesday","Wednesday","Thursday","Friday"};
+    printf("*************************************************************\n");
     printf("Enter your Name :- ");
     gets(emp_name);
     printf("Enter you Employee ID :- ");
     scanf("%d",&emp_id);
+    printf("*************************************************************\n");
     printf("How Many Days you have Worked till now? : - ");
     scanf("%d",&numDay);
-    
-    for(int i = 0 ; i < numDay ; i++){
-        printf("Enter the Working Hours for %s :- ", arrDays[i]);
-        scanf("%d", &arrHours[i]);
-        printf("Enter the Total Minutes (Except Hours) for %s :- ", arrDays[i]);
-        scanf("%d", &arrMinutes[i]);
-    }
-    Final_Result_Box1 = total_time_calculator(arrHours,arrMinutes,numDay);
     printf("*************************************************************\n");
-    printf("Total Weekly Working Hours are %d Hours and %d Minutes\n", Final_Result_Box1[0], Final_Result_Box1[1]);
     
-    int condition_time = (Final_Result_Box1[0] * 60) + 30;
-    Final_Result_Box2 = extra_or_required_working_hours(Final_Result_Box1);
-    printf("*************************************************************\n");
-    //
-    if(numDay==4){
-        if(condition_time > required_time){
-        printf("Hey %s, you have already worked %d Hours and %d Minutes Over Time, you don't need to work on Friday\n", emp_name, Final_Result_Box2[0], Final_Result_Box2[1]);
+    mode = choicer();
+    if(mode == 1){
+        for(int i = 0 ; i < numDay ; i++){
+            printf("Enter the Working Hours for %s :- ", arrDays[i]);
+            scanf("%d", &arrHours[i]);
+            printf("Enter the Total Minutes (Except Hours) for %s :- ", arrDays[i]);
+            scanf("%d", &arrMinutes[i]);
+        }
+        Final_Result_Box1 = total_time_calculator(arrHours,arrMinutes,numDay);
         printf("*************************************************************\n");
+        printf("Total Weekly Working Hours are %d Hours and %d Minutes\n", Final_Result_Box1[0], Final_Result_Box1[1]);
+        
+        int condition_time = (Final_Result_Box1[0] * 60) + 30;
+        Final_Result_Box2 = extra_or_required_working_hours(Final_Result_Box1);
+        printf("*************************************************************\n");
+        //
+        if(numDay==4){
+            if(condition_time > required_time){
+            printf("Hey %s, you have already worked %d Hours and %d Minutes Over Time, you don't need to work on Friday\n", emp_name, Final_Result_Box2[0], Final_Result_Box2[1]);
+            printf("*************************************************************\n");
+            }
+            else{
+                 printf("Hey %s, you are required to Work %d Hours and %d Minutes more on Friday\n", emp_name, Final_Result_Box2[0], Final_Result_Box2[1]);
+                printf("*************************************************************\n");
+            }
         }
         else{
-             printf("Hey %s, you are required to Work %d Hours and %d Minutes more on Friday\n", emp_name, Final_Result_Box2[0], Final_Result_Box2[1]);
-            printf("*************************************************************\n");
+            Final_Result_Box3 = time_balancer(Final_Result_Box2[0], Final_Result_Box2[1],numDay);
+            if(Final_Result_Box3 == 0){
+                printf("Hey %s You have not worked in this Week.. :(",emp_name);
+            }
+            else{
+                printf("Hey %s For a Balanced Work Life, you can do %d Hours and %d Minutes daily for the next %d Days.",emp_name, Final_Result_Box3[0], Final_Result_Box3[1], 5-numDay);
+            }
         }
     }
-    else{
-        Final_Result_Box3 = time_balancer(Final_Result_Box2[0], Final_Result_Box2[1],numDay);
-        if(Final_Result_Box3 == 0){
-            printf("Hey %s You have not worked in this Week.. :(",emp_name);
-        }
-        else{
-            
-            printf("Hey %s For a Balanced Work Life, you can do %d Hours and %d Minutes daily for the next %d Days.",emp_name, Final_Result_Box3[0], Final_Result_Box3[1], 5-numDay);
-        }
+    else if(mode == 2){
+        timestamper(numDay);
     }
 }
 
