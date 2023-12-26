@@ -3,7 +3,7 @@ Considering a 9.5 Hours daily working and mandatory 47.5 hours working in a 5 da
 this program will show the total working hours and total required hours in a week to meet the office policy.
 */
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-///// BASE CODE : 433 - 473                   MODIFIED CODE : 236 - 427                  FINAL CODE : 11 - 226 /////
+///// BASE CODE : 438 - 478                   MODIFIED CODE : 241 - 432                  FINAL CODE : 11 - 231 /////
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 
@@ -33,14 +33,16 @@ int calculateTotalMinutes(struct Time inTime, struct Time outTime) {
 }
 
 // Function to convert minutes to hours and minutes
-void *convertToHoursAndMinutes(int totalMinutes) {
-    static int HourMinuteBox[10];
+// Function to convert minutes to hours and minutes
+int *convertToHoursAndMinutes(int totalMinutes) {
+    int *HourMinuteBox = malloc(2 * sizeof(int));
     int hours = totalMinutes / 60;
     int minutes = totalMinutes % 60;
     HourMinuteBox[0] = hours;
     HourMinuteBox[1] = minutes;
     return HourMinuteBox;
 }
+
 
 //Function to Calculate remaining time for the coming days
 int *extra_or_required_working_hours(int arrHourMinutes[]){
@@ -74,14 +76,15 @@ int *extra_or_required_working_hours(int arrHourMinutes[]){
 }
 
 //Counts the total worked hours & Minutes for the week and return as array
-int *total_time_calculator(int arrHours[], int arrMinutes[]){
+// Counts the total worked hours & Minutes for the week and return as array
+int *total_time_calculator(int arrHours[], int arrMinutes[]) {
     static int resultBox1[10];
-    int hourCounter = 0, minutesCounter = 0, totalHours;
-    for(int i = 0 ; i < numDay ; i++){
+    int hourCounter = 0, minutesCounter = 0, totalHours = 0; // Initialize totalHours
+    for (int i = 0; i < numDay; i++) {
         hourCounter += arrHours[i];
         minutesCounter += arrMinutes[i];
     }
-    while(minutesCounter >= 60){
+    while (minutesCounter >= 60) {
         minutesCounter -= 60;
         totalHours += 1;
     }
@@ -90,6 +93,7 @@ int *total_time_calculator(int arrHours[], int arrMinutes[]){
     resultBox1[1] = minutesCounter;
     return resultBox1;
 }
+
 
 //Function to balance the required working hours for the coming days
 int *time_balancer(int a, int b, int numDay){
@@ -171,10 +175,11 @@ int timestamper(){
         scanf("%d %d", &outTime.hours, &outTime.minutes);
         int totalMinutes = calculateTotalMinutes(inTime, outTime);
         p = convertToHoursAndMinutes(totalMinutes);
-        arrHours[i]=p[0];
-        arrMinutes[i]=p[1];
+        arrHours[i] = p[0];
+        arrMinutes[i] = p[1];
+        free(p); // Free the dynamically allocated memory
         daily_minutes_adder += totalMinutes;
-    }   
+    }  
     Final_Result_Box1 = total_time_calculator(arrHours,arrMinutes);
     printf("*************************************************************\n");
     printf("Total Weekly Working Hours are %d Hours and %d Minutes\n", Final_Result_Box1[0], Final_Result_Box1[1]);
