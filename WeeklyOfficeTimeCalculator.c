@@ -158,7 +158,7 @@ int hourstamper(){
         }
         else{
             printf("Hey %s For a Balanced Work Life, you can do %d Hours and %d Minutes daily for the next %d Days.\n",emp_name, Final_Result_Box3[0], Final_Result_Box3[1], 5-numDay);
-            ("**************************************************************************************************************************\n")
+            ("**************************************************************************************************************************\n");
         }
     }
 }
@@ -207,7 +207,7 @@ int timestamper(){
         }
         else{
             printf("Hey %s For a Balanced Work Life, you can do %d Hours and %d Minutes daily for the next %d Days.\n",emp_name, Final_Result_Box3[0], Final_Result_Box3[1], 5-numDay);
-            ("**************************************************************************************************************************\n")
+            ("**************************************************************************************************************************\n");
         }
     }
 }
