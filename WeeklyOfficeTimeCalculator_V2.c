@@ -204,10 +204,18 @@ int timestamper(){
             printf("Hey %s You have not worked in this Week.. :(",emp_name);
         }
         else{
-            printf("Hey %s, you are required to Work %d Hours and %d Minutes more on Friday\n", emp_name, Final_Result_Box2[0], Final_Result_Box2[1]);
-            printf("************************************************************************************************************************\n");
-            printf("For a Balanced Work Life, you can do %d Hours and %d Minutes daily for the next %d Days.\n", Final_Result_Box3[0], Final_Result_Box3[1], 5-numDay);
-            printf("************************************************************************************************************************\n");
+            if(numDay==4){
+                printf("Hey %s, you are required to Work %d Hours and %d Minutes more on Friday\n", emp_name, Final_Result_Box2[0], Final_Result_Box2[1]);
+                printf("************************************************************************************************************************\n");
+            }
+            else{
+                printf("Hey %s, you are required to Work %d Hours and %d Minutes more this week\n", emp_name, Final_Result_Box2[0], Final_Result_Box2[1]);
+                printf("************************************************************************************************************************\n");
+                printf("For a Balanced Work Life, you can do %d Hours and %d Minutes daily for the next %d Days.\n", Final_Result_Box3[0], Final_Result_Box3[1], 5-numDay);
+                printf("************************************************************************************************************************\n");
+            }
+            
+            
         }
     }
 }
@@ -235,6 +243,7 @@ int main(){
         
         struct Time laterTime = addTime(t, 9.5);
         printf("Today, you can Punch-out at:- %d : %d \n", laterTime.hours, laterTime.minutes);
+        getch();
     }
     else{
         printf("************************************************************************************************************************\n");
