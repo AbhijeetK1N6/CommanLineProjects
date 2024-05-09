@@ -153,7 +153,7 @@ int hourstamper(){
             printf("Hey %s You have not worked in this Week.. :(",emp_name);
         }
         else{
-            printf("Hey %s, you are required to Work %d Hours and %d Minutes more on Friday\n", emp_name, Final_Result_Box2[0], Final_Result_Box2[1]);
+            printf("Hey %s, you are required to Work %d Hours and %d Minutes more this week\n", emp_name, Final_Result_Box2[0], Final_Result_Box2[1]);
             printf("************************************************************************************************************************\n");
             printf("For a Balanced Work Life, you can do %d Hours and %d Minutes daily for the next %d Days.\n", Final_Result_Box3[0], Final_Result_Box3[1], 5-numDay);
             printf("************************************************************************************************************************\n");
@@ -226,7 +226,7 @@ int main(){
     system("color 0A");
     printf("************************************************************************************************************************\n");
     printf("\nInstructions:-\n1) Do not count present day in Number of Days worked.\n2) Press 1 if you have already calculated your daily hours.\n3) Press 2 if you want didn't calculated your daily hours and want to Enter PUNCH-IN and PUNCH-OUT Time\n4) (HH MM) stand for (Hours Minutes)\n5) Enter the time in specified format only. Take care of the space between (HH MM)\n\n");
-    system("color 60");    //to change console color     (    SYNTAX : system("Background_Color+Text_Color");    )
+    system("color 57");    //to change console color     (    SYNTAX : system("Background_Color+Text_Color");    )
     printf("\n************************************************************************************************************************\n");
     printf("\nEnter your Name : ");
     gets(emp_name);
