@@ -30,12 +30,13 @@ answers = {
 os.system("echo \033[47m")
 name = input("Enter your Name: ")
 os.system('echo \033[43m')
-print(f"Hi! {name} Welcome to KBL - Kaun Banega Lakhpati.")
-print("You will be asked 5 Questions, you have to answer them correctly to win the round.")
-print("There is only 1 Lifeline Named as \"MAAFI\".")
-print("Winning each round will multiply your winning amount.")
-print("Winning 1st round will win you 50 INR.")
-print("The amount will get 10 times each round and one wrong answer will lead to Game Over with Half Winnning Amount only")
+print(f"Hi! {name} Welcome to BKL - \"Banega Kaun Lakhpati\". Please read the rules below:")
+print("1) You will be asked 5 Questions, you have to answer them correctly to win the round.")
+print("2) To answer a Question, just type the Option like A/B/C/D.")
+print("3) There is only 1 Lifeline using which you can re-attempt the same Question.")
+print("4) Winning each round will multiply your winning amount.")
+print("5) Winning 1st round will win you 50 INR.")
+print("6) The amount will get 10 times each round and one wrong answer will lead to Game Over with Half Winnning Amount only")
 
 for i in range(1, 6):
     os.system('echo \033[40m')
@@ -45,7 +46,7 @@ for i in range(1, 6):
     print(f"Question {i} : {questions[i]}")
     for option in options[i]:
         print(option)
-    
+    # Code by @AbhijeetK1N6
     while True:
         if LifeLine==1:
             choice = input("Type A to Answer and B to Avail Lifeline: ").strip().upper()
@@ -78,7 +79,6 @@ for i in range(1, 6):
                     print(f"GAME OVER, You can take {INR/2} rupees with you.")
                     exit()
             break
-        # Code by @AbhijeetK1N6
         else:
             user_answer = input("Your answer: ").strip().upper()
             if user_answer == answers[i]:
@@ -96,5 +96,4 @@ for i in range(1, 6):
             break
 else:
     os.system('echo \033[42m')
-    print(f"Congratulations Lakhpati!!, You have won the KBL Game you can take {INR} rupees with you.")
-
+    print(f"Congratulations Lakhpati!!, You have won the BKL Game you can take {INR} rupees with you.")
